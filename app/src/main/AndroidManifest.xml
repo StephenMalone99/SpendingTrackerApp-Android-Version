@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpendingTrackerAndroidAppAsgn2">
         <activity
-            android:name=".MainActivity"
+            android:name=".SpendingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

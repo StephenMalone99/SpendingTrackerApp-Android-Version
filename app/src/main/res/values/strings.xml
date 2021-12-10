@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Stephens Spending Tracker!</string>
-    <string name="window_text">Getting a button working</string>
-    <string name="button_label">Show button working</string>
-    <string name="notice_text">This is the start of my assignment!</string>
+    <string name="app_name">Stephens Spending Tracker</string>
+    <string name="button_addPurchase">Add Item Purchased</string>
+    <string name="hint_purchaseName">Name of Purchase</string>
 </resources>

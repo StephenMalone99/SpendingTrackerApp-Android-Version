@@ -12,6 +12,9 @@ class MainApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        i("Spending Tracker App started")
+        i("Spending Tracker started")
+        purchases.add(PurchaseModel("T-Shirt", "From JD sports", 50))
+        purchases.add(PurchaseModel("Jeans", "From Jack and Jones", 80))
+        purchases.add(PurchaseModel("Phone", "Samsung Galaxy S20", 1000))
     }
 }

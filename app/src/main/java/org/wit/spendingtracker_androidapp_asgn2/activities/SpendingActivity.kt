@@ -39,7 +39,10 @@ class SpendingActivity : AppCompatActivity() {
                 i("Item added to spending tracker: ${purchase}")
                 for (i in app!!.purchases.indices)
                 { i("Purchase[$i]:${this.app.purchases[i]}") }
-            } else {
+                setResult(RESULT_OK)
+                finish()
+            }
+             else {
                 Snackbar
                     .make(it, "Please ensure you fill in all fields", Snackbar.LENGTH_LONG)
                     .show()

@@ -3,6 +3,7 @@
     package="org.wit.spendingtracker_androidapp_asgn2">
 
     <application
+        android:name="org.wit.spendingtracker_androidapp_asgn2.main.MainApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

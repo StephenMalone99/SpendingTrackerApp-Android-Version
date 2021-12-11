@@ -12,6 +12,7 @@ class SpendingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySpendingBinding
     var purchase = PurchaseModel()
+    val purchases = ArrayList<PurchaseModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +26,11 @@ class SpendingActivity : AppCompatActivity() {
 
         binding.btnAdd.setOnClickListener() {
             purchase.purchaseName = binding.purchaseName.text.toString()
+            purchase.description = binding.description.text.toString()
+            purchase.cost = binding.cost.text.toString().toInt()
             if (purchase.purchaseName.isNotEmpty()) {
-                i("Name of Item added: ${purchase.purchaseName}")
+                purchases.add(purchase.copy())
+                i("Name of Item purchased: ${purchase}")
             } else {
                 Snackbar
                     .make(it, "Please Enter what you have Purchased", Snackbar.LENGTH_LONG)

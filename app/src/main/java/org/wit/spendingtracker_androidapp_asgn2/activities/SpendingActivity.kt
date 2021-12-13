@@ -41,10 +41,7 @@ class SpendingActivity : AppCompatActivity() {
                 i("Please enter a number")
             }
             if (purchase.purchaseName.isNotEmpty() && purchase.description.isNotEmpty() && purchase.cost != null) {
-                app.purchases.add(purchase.copy())
-                i("Item added to spending tracker: ${purchase}")
-                for (i in app!!.purchases.indices)
-                { i("Purchase[$i]:${this.app.purchases[i]}") }
+                app.purchases.create(purchase.copy())
                 setResult(RESULT_OK)
                 finish()
             }

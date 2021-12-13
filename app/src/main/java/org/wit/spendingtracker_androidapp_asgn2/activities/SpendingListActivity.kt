@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.spendingtracker_androidapp_asgn2.R
+import org.wit.spendingtracker_androidapp_asgn2.adapters.PurchaseAdapter
+import org.wit.spendingtracker_androidapp_asgn2.adapters.PurchaseListener
 import org.wit.spendingtracker_androidapp_asgn2.databinding.ActivitySpendingListBinding
 import org.wit.spendingtracker_androidapp_asgn2.databinding.CardPlacemarkBinding
 import org.wit.spendingtracker_androidapp_asgn2.main.MainApp
 import org.wit.spendingtracker_androidapp_asgn2.models.PurchaseModel
 
-class SpendingListActivity : AppCompatActivity() {
+class SpendingListActivity : AppCompatActivity(), PurchaseListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySpendingListBinding
@@ -31,7 +33,8 @@ class SpendingListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PurchaseAdapter(app.purchases)
+        binding.recyclerView.adapter = PurchaseAdapter(app.purchases.findAll(),this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -48,33 +51,12 @@ class SpendingListActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onPurchaseClick(purchase: PurchaseModel) {
+        val launcherIntent = Intent(this, SpendingActivity::class.java)
+        startActivityForResult(launcherIntent,0)
+    }
+
 }
 
-class PurchaseAdapter constructor(private var purchases: List<PurchaseModel>) :
-    RecyclerView.Adapter<PurchaseAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardPlacemarkBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val purchase = purchases[holder.adapterPosition]
-        holder.bind(purchase)
-    }
-
-    override fun getItemCount(): Int = purchases.size
-
-    class MainHolder(private val binding : CardPlacemarkBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(purchase: PurchaseModel) {
-            binding.purchaseName.text = purchase.purchaseName
-            binding.purchaseDescription.text = purchase.description
-            binding.cost.text = purchase.cost.toString()
-        }
-    }
-}
 

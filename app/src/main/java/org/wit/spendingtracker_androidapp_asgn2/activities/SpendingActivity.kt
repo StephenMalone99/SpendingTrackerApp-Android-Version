@@ -2,7 +2,10 @@ package org.wit.spendingtracker_androidapp_asgn2.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
+import org.wit.spendingtracker_androidapp_asgn2.R
 import org.wit.spendingtracker_androidapp_asgn2.databinding.ActivitySpendingBinding
 import org.wit.spendingtracker_androidapp_asgn2.main.MainApp
 import org.wit.spendingtracker_androidapp_asgn2.models.PurchaseModel
@@ -21,6 +24,9 @@ class SpendingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySpendingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
         i("Spending Tracker App started...")
@@ -48,5 +54,19 @@ class SpendingActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_purchase, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

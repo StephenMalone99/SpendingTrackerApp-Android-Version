@@ -54,6 +54,7 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
 
     override fun onPurchaseClick(purchase: PurchaseModel) {
         val launcherIntent = Intent(this, SpendingActivity::class.java)
+        launcherIntent.putExtra("edit_purchase", purchase)
         startActivityForResult(launcherIntent,0)
     }
 

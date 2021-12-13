@@ -31,6 +31,13 @@ class SpendingActivity : AppCompatActivity() {
         app = application as MainApp
         i("Spending Tracker App started...")
 
+        if (intent.hasExtra("edit_purchase")) {
+            purchase = intent.extras?.getParcelable("edit_purchase")!!
+            binding.purchaseName.setText(purchase.purchaseName)
+            binding.description.setText(purchase.description)
+        //    binding.cost.setText(purchase.cost.toString().toInt())
+        }
+
         binding.btnAdd.setOnClickListener() {
             purchase.purchaseName = binding.purchaseName.text.toString()
             purchase.description = binding.description.text.toString()

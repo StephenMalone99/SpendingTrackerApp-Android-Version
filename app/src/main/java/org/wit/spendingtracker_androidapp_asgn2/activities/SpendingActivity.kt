@@ -50,7 +50,7 @@ class SpendingActivity : AppCompatActivity() {
             catch (e: NumberFormatException) {
                 i("Please enter a number")
             }
-            if (purchase.purchaseName.isEmpty() && purchase.description.isEmpty() && purchase.cost == 0) {
+            if (purchase.purchaseName.isEmpty() or purchase.description.isEmpty() or purchase.cost.equals(0)) {
                 Snackbar
                     .make(it,R.string.enter_purchase_title, Snackbar.LENGTH_LONG)
                     .show()
@@ -58,8 +58,14 @@ class SpendingActivity : AppCompatActivity() {
             else {
                 if (edit) {
                     app.purchases.update(purchase.copy())
+                    Snackbar
+                        .make(it,R.string.purchase_updated, Snackbar.LENGTH_LONG)
+                        .show()
                 } else {
                     app.purchases.create(purchase.copy())
+                    Snackbar
+                        .make(it,R.string.purchase_created, Snackbar.LENGTH_LONG)
+                        .show()
                 }
             } }
     }

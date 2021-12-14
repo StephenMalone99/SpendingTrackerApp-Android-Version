@@ -8,5 +8,7 @@
     <string name="menu_cancelPurchase">Cancel</string>
     <string name="enter_purchase_title"> Please ensure you enter all fields of the item you have purchased </string>
     <string name="save_purchase"> Save Purchase </string>
+    <string name="purchase_updated"> Purchase has been successfully updated! Press cancel to return.</string>
+    <string name="purchase_created"> Purchase has been successfully created! Press cancel to return or add another purchase above.</string>
 
 </resources>

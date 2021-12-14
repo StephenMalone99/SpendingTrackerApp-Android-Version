@@ -3,6 +3,7 @@ package org.wit.spendingtracker_androidapp_asgn2.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.spendingtracker_androidapp_asgn2.databinding.CardPlacemarkBinding
 import org.wit.spendingtracker_androidapp_asgn2.models.PurchaseModel
 
@@ -34,7 +35,10 @@ class PurchaseAdapter constructor(private var purchases: List<PurchaseModel>,
             binding.purchaseName.text = purchase.purchaseName
             binding.purchaseDescription.text = purchase.description
             binding.cost.text = purchase.cost.toString()
+            Picasso.get().load(purchase.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPurchaseClick(purchase) }
             }
     }
+
+
 }

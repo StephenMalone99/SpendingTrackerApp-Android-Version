@@ -28,6 +28,7 @@ class PurchaseMemStore : PurchaseStore {
             foundPurchase.purchaseName = purchase.purchaseName
             foundPurchase.description = purchase.description
             foundPurchase.cost = purchase.cost.toString().toInt()
+            foundPurchase.image = purchase.image
             logAll()
         }
     }

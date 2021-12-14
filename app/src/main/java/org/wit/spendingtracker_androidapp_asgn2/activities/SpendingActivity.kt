@@ -1,6 +1,7 @@
 package org.wit.spendingtracker_androidapp_asgn2.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -49,6 +50,9 @@ class SpendingActivity : AppCompatActivity() {
             Picasso.get()
                 .load(purchase.image)
                 .into(binding.purchaseImage)
+            if (purchase.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_purchase_image)
+            }
 
         }
 
@@ -123,6 +127,7 @@ class SpendingActivity : AppCompatActivity() {
                             Picasso.get()
                                 .load(purchase.image)
                                 .into(binding.purchaseImage)
+                            binding.chooseImage.setText(R.string.change_purchase_image)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

@@ -22,6 +22,7 @@ class SpendingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var edit = false
         binding = ActivitySpendingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -32,10 +33,12 @@ class SpendingActivity : AppCompatActivity() {
         i("Spending Tracker App started...")
 
         if (intent.hasExtra("edit_purchase")) {
+            edit = true
             purchase = intent.extras?.getParcelable("edit_purchase")!!
             binding.purchaseName.setText(purchase.purchaseName)
             binding.description.setText(purchase.description)
-        //    binding.cost.setText(purchase.cost.toString().toInt())
+            binding.cost.setText(purchase.cost.toString())
+            binding.btnAdd.setText(R.string.save_purchase)
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -47,17 +50,18 @@ class SpendingActivity : AppCompatActivity() {
             catch (e: NumberFormatException) {
                 i("Please enter a number")
             }
-            if (purchase.purchaseName.isNotEmpty() && purchase.description.isNotEmpty() && purchase.cost != null) {
-                app.purchases.create(purchase.copy())
-                setResult(RESULT_OK)
-                finish()
-            }
-             else {
+            if (purchase.purchaseName.isEmpty() && purchase.description.isEmpty() && purchase.cost == 0) {
                 Snackbar
-                    .make(it, "Please ensure you fill in all fields", Snackbar.LENGTH_LONG)
+                    .make(it,R.string.enter_purchase_title, Snackbar.LENGTH_LONG)
                     .show()
             }
-        }
+            else {
+                if (edit) {
+                    app.purchases.update(purchase.copy())
+                } else {
+                    app.purchases.create(purchase.copy())
+                }
+            } }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

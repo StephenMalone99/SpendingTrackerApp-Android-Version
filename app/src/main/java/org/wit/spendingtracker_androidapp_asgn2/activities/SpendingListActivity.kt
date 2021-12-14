@@ -58,6 +58,11 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
         startActivityForResult(launcherIntent,0)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 }
 
 

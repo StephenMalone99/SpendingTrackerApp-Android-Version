@@ -10,5 +10,6 @@
     <string name="save_purchase"> Save Purchase </string>
     <string name="purchase_updated"> Purchase has been successfully updated! Press cancel to return.</string>
     <string name="purchase_created"> Purchase has been successfully created! Press cancel to return or add another purchase above.</string>
-
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_purchase_image">Select your image of the item</string>
 </resources>

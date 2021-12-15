@@ -37,6 +37,7 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = PurchaseAdapter(app.purchases.findAll(),this)
+        loadPurchases()
 
         registerRefreshCallback()
     }
@@ -66,7 +67,16 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadPurchases() }
+    }
+
+    private fun loadPurchases() {
+        showPurchases(app.purchases.findAll())
+    }
+
+    fun showPurchases (purchases: List<PurchaseModel>) {
+        binding.recyclerView.adapter = PurchaseAdapter(purchases, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
 }

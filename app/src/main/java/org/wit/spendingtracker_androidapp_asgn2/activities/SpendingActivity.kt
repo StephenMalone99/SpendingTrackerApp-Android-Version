@@ -26,7 +26,6 @@ class SpendingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpendingBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    var location = Location(52.26131964443837, -7.111552140727241, 15f)
     var purchase = PurchaseModel()
     lateinit var app: MainApp
     val IMAGE_REQUEST = 1
@@ -106,6 +105,12 @@ class SpendingActivity : AppCompatActivity() {
         }
 
         binding.purchaseLocation.setOnClickListener {
+            val location = Location(52.26131964443837, -7.111552140727241, 15f)
+            if (purchase.zoom != 0f) {
+                location.lat =  purchase.lat
+                location.lng = purchase.lng
+                location.zoom = purchase.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
@@ -157,8 +162,11 @@ class SpendingActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            purchase.lat = location.lat
+                            purchase.lng = location.lng
+                            purchase.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

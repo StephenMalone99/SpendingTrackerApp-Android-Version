@@ -29,6 +29,9 @@ class PurchaseMemStore : PurchaseStore {
             foundPurchase.description = purchase.description
             foundPurchase.cost = purchase.cost.toString().toInt()
             foundPurchase.image = purchase.image
+            foundPurchase.lat = purchase.lat
+            foundPurchase.lng = purchase.lng
+            foundPurchase.zoom = purchase.zoom
             logAll()
         }
     }

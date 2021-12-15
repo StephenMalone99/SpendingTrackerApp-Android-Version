@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.spendingtracker_androidapp_asgn2.R
@@ -21,6 +23,7 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySpendingListBinding
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,7 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = PurchaseAdapter(app.purchases.findAll(),this)
 
+        registerRefreshCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,7 +50,7 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, SpendingActivity::class.java)
-                startActivityForResult(launcherIntent,0)
+                refreshIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -55,12 +59,14 @@ class SpendingListActivity : AppCompatActivity(), PurchaseListener {
     override fun onPurchaseClick(purchase: PurchaseModel) {
         val launcherIntent = Intent(this, SpendingActivity::class.java)
         launcherIntent.putExtra("edit_purchase", purchase)
-        startActivityForResult(launcherIntent,0)
+        refreshIntentLauncher.launch(launcherIntent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
-        super.onActivityResult(requestCode, resultCode, data)
+
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { binding.recyclerView.adapter?.notifyDataSetChanged() }
     }
 
 }

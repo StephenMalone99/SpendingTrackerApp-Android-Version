@@ -14,6 +14,7 @@ import org.wit.spendingtracker_androidapp_asgn2.R
 import org.wit.spendingtracker_androidapp_asgn2.databinding.ActivitySpendingBinding
 import org.wit.spendingtracker_androidapp_asgn2.helpers.showImagePicker
 import org.wit.spendingtracker_androidapp_asgn2.main.MainApp
+import org.wit.spendingtracker_androidapp_asgn2.models.Location
 import org.wit.spendingtracker_androidapp_asgn2.models.PurchaseModel
 import timber.log.Timber
 import timber.log.Timber.i
@@ -24,6 +25,8 @@ class SpendingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySpendingBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var location = Location(52.26131964443837, -7.111552140727241, 15f)
     var purchase = PurchaseModel()
     lateinit var app: MainApp
     val IMAGE_REQUEST = 1
@@ -98,7 +101,18 @@ class SpendingActivity : AppCompatActivity() {
                 showImagePicker(imageIntentLauncher)
             }
 
+        binding.purchaseLocation.setOnClickListener {
+            i ("Set Location Pressed")
+        }
+
+        binding.purchaseLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         registerImagePickerCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -128,6 +142,23 @@ class SpendingActivity : AppCompatActivity() {
                                 .load(purchase.image)
                                 .into(binding.purchaseImage)
                             binding.chooseImage.setText(R.string.change_purchase_image)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

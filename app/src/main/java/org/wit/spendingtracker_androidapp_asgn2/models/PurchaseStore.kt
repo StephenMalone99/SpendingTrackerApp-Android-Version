@@ -4,4 +4,5 @@ interface PurchaseStore {
     fun findAll(): List<PurchaseModel>
     fun create(purchase: PurchaseModel)
     fun update(purchase: PurchaseModel)
+    fun delete(purchase: PurchaseModel)
 }

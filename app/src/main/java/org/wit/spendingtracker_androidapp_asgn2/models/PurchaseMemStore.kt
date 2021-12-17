@@ -36,6 +36,10 @@ class PurchaseMemStore : PurchaseStore {
         }
     }
 
+    override fun delete(purchase: PurchaseModel) {
+        purchases.remove(purchase)
+    }
+
 
     fun logAll() {
         purchases.forEach{ i("Item has been added to spending tracker : ${it}") }

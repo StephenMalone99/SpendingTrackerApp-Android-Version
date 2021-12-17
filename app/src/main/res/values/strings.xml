@@ -15,5 +15,6 @@
     <string name="change_purchase_image">Change image of your item</string>
     <string name="button_location">Set Location of Purchase</string>
     <string name="title_activity_map">Map</string>
+    <string name="menu_deletePurchase">Delete Item</string>
 
 </resources>

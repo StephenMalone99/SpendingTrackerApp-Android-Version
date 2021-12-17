@@ -127,6 +127,10 @@ class SpendingActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_delete -> {
+                app.purchases.delete(purchase)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }
@@ -167,7 +171,7 @@ class SpendingActivity : AppCompatActivity() {
                             purchase.lat = location.lat
                             purchase.lng = location.lng
                             purchase.zoom = location.zoom
-                        } // end of if
+                        }
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }

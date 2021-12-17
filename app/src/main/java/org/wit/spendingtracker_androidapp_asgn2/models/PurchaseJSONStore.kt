@@ -42,7 +42,22 @@ class PurchaseJSONStore(private val context: Context) : PurchaseStore {
 
 
     override fun update(purchase: PurchaseModel) {
-        // todo
+        var foundPurchase: PurchaseModel? = purchases.find { p -> p.id == purchase.id }
+        if (foundPurchase != null) {
+            foundPurchase.purchaseName = purchase.purchaseName
+            foundPurchase.description = purchase.description
+            foundPurchase.cost = purchase.cost.toString().toInt()
+            foundPurchase.image = purchase.image
+            foundPurchase.lat = purchase.lat
+            foundPurchase.lng = purchase.lng
+            foundPurchase.zoom = purchase.zoom
+        }
+        serialize()
+    }
+
+    override fun delete(purchase: PurchaseModel) {
+        purchases.remove(purchase)
+        serialize()
     }
 
     private fun serialize() {
